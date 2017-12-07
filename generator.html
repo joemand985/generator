@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BOPATG</title>
+</head>
+
+<body>
+    <h1>Bootstrap One Page Template Generator</h1>
+    <p>Enter comma separated list of section names and click on <strong>"Generate"</strong>.</p>
+    <input type="text" id="inputNames" style="width: 35%;" value="brand,about,contact" />
+    <button onclick="generate()">Generate</button>
+    <div>
+        <p>Generated source code:</p>
+        <textarea style="width: 70%; height: 400px;" id="result" disabled>The generated source code will be displayed here!</textarea>
+    </div>
+    <button onclick="download()">Download</button>
+ 
+    <!--preview area-->
+    <div id="preview" style="width: 70%; height: 400px;">
+    <script type="text/javascript">
+    const inputNames = document.getElementById("inputNames");
+    const result = document.getElementById("result");
+
+    function download() {
+        let downloadLink = document.createElement('a');
+        downloadLink.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(result.value));
+        downloadLink.setAttribute('download', "BOPATG.html");
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    }
+
+    function generate() {
+        debugger;
+        const namesValue = inputNames.value;
+        let template = "<!DOCTYPE html>\n" +
+            "<html>\n" +
+            "  <head>\n" +
+            "    <title>Demo</title>\n" +
+            "    <!-- Required meta tags -->\n" +
+            "    <meta charset='utf-8'>\n" +
+            "    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>\n" +
+            "    <!-- Bootstrap CSS -->\n" +
+            "    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' >\n" +
+            "    <link rel='stylesheet' href='css/demo.css'>\n" +
+            "  </head>\n" +
+            "<body>\n" +
+
+            "<nav class='navbar navbar-default'>\n" +
+            "  <div class='container'>\n" +
+            "    <div class='navbar-header'>\n" +
+            "      <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#myNavbar'>\n" +
+
+            "      </button>\n" +
+            "</div>\n" +
+            "<div class='collapse navbar-collapse' id='myNavbar'>\n" +
+            "<ul class='nav navbar-nav navbar-right'>\n" +
+            "        $REPLACE_ME$\n" +
+            "</ul>\n" +
+            "</div>\n" +
+            "</div>\n" +
+            "</nav>\n" +
+
+
+            
+            "</body>\n" +
+            "</html>\n"
+        var REPLACE_ME = ""
+        const names = namesValue.split(',');
+        for (var i = 0; i < names.length; i++) {
+            var name = names[i];
+            REPLACE_ME += "<li><a href='#who'>" + name + "</a></li>\n";
+        }
+        template = template.replace("$REPLACE_ME$", REPLACE_ME);
+        result.innerHTML = template; 
+        // - preview
+        document.getElementById("preview").innerHTML = template;
+    }
+
+    //function preview() {
+
+    //}
+    </script>
+</body>
+
+</html>
